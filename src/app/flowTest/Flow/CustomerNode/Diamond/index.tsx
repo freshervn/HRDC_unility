@@ -22,12 +22,11 @@ function DiamondNode({ data }: { data: any }) {
         />
         <div className="w-[100px] h-[100px] rounded-10 p-[3px] flex justify-center align-middle  bg-red-600 clip-diamond">
           <div className="w-full h-full rounded-10  border-2 bg-white clip-diamond"></div>
-          {/* <input
-          id="text"
-          name="text"
-          onChange={onChange}
-          className="w-full m-auto"
-        /> */}
+          <div className="m-auto">
+            {data?.fields?.map((field: any, i: number) => (
+              <h1 key={i}>{field.value}</h1>
+            ))}
+          </div>
         </div>
         <Handle
           type="source"

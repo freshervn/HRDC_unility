@@ -19,6 +19,11 @@ function SquareNode({ data }: { data: any }) {
         position={Position.Top}
         className={`${!visible && "opacity-0"}`}
       />
+      <div className="m-auto">
+        {data?.fields?.map((field: any, i: number) => (
+          <h1 key={i}>{field.value}</h1>
+        ))}
+      </div>
 
       <Handle
         type="source"

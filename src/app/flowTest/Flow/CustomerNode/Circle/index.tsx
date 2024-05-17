@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Handle, NodeResizer, Position } from "reactflow";
 
-function CircleNode({ data }: { data: any }) {
+function CircleNode({ data, ...rest }: { data: any }) {
   const [visible, setVisible] = useState(false);
-
+  console.log(data);
   return (
     <div
       onMouseEnter={() => {
@@ -19,7 +19,11 @@ function CircleNode({ data }: { data: any }) {
         position={Position.Top}
         className={`${!visible && "opacity-0"}`}
       />
-      <div className="m-auto">hello world</div>
+      <div className="m-auto">
+        {data?.fields?.map((field: any, i: number) => (
+          <h1 key={i}>{field.value}</h1>
+        ))}
+      </div>
       <Handle
         type="source"
         position={Position.Bottom}
