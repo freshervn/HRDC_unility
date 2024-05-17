@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { Handle, Position } from "reactflow";
+import { useState } from "react";
+import { Handle, NodeResizer, Position } from "reactflow";
 
 function CircleNode({ data }: { data: any }) {
   const [visible, setVisible] = useState(false);
@@ -13,19 +13,13 @@ function CircleNode({ data }: { data: any }) {
         setVisible(false);
       }}
     >
+      <NodeResizer />
       <Handle
         type="target"
         position={Position.Top}
         className={`${!visible && "opacity-0"}`}
       />
-      <div className="w-[100px] h-[100px] rounded-full border-indigo-600 p-3 flex justify-center align-middle border-2 bg-white">
-        {/* <input
-          id="text"
-          name="text"
-          onChange={onChange}
-          className="w-full m-auto"
-        /> */}
-      </div>
+      <div className="m-auto">hello world</div>
       <Handle
         type="source"
         position={Position.Bottom}

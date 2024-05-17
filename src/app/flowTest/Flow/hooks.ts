@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { addEdge, useEdgesState, useNodesState } from "reactflow";
+import { Node, addEdge, useEdgesState, useNodesState } from "reactflow";
 
 const useFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -12,17 +12,11 @@ const useFlow = () => {
     [setEdges]
   );
 
-  const generateNewNode = (type: string) => {
+  const generateNewNode = (node: Node) => {
     setNodes((prev) => [
       ...prev,
       {
-        id: "" + Date.now() + Math.random(),
-        position: {
-          x: (prev[prev.length - 1]?.position?.x + 20) | 200,
-          y: (prev[prev.length - 1]?.position?.y + 20) | 200,
-        },
-        data: { label: "" + Date.now() + Math.random(), fields: [] },
-        type: type,
+        ...node        
       },
     ]);
   };

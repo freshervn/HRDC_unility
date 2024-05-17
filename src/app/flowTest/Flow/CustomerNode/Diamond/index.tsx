@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Handle, Position } from "reactflow";
+import { Handle, NodeResizer, Position } from "reactflow";
 
 function DiamondNode({ data }: { data: any }) {
   const [visible, setVisible] = useState(false);
@@ -14,6 +14,7 @@ function DiamondNode({ data }: { data: any }) {
           setVisible(false);
         }}
       >
+        <NodeResizer />
         <Handle
           type="target"
           position={Position.Top}

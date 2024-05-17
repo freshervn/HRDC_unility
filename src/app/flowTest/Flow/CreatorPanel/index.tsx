@@ -1,14 +1,33 @@
+import { Node } from "reactflow";
+
 const CreatorPanel = ({
   generateNewNode,
 }: {
-  generateNewNode: (type: string) => void;
+  generateNewNode: (node: Node) => void;
 }) => {
+  const prefix: Node = {
+    id: "" + Date.now() + Math.random(),
+    position: {
+      x: 200,
+      y: 200,
+    },
+    data: { label: "" + Date.now() + Math.random(), fields: [] },
+  };
   return (
     <div className="flex gap-4 justify-center align-middle bg-white p-3 rounded-md">
-      <p className="text-2xl m-auto">New</p>      
+      <p className="text-2xl m-auto">New</p>
       <button
         onClick={() => {
-          generateNewNode("circle");
+          generateNewNode({
+            ...prefix,
+            type: "circle",
+            className:
+              "rounded-full border-indigo-600 p-3 flex justify-center align-middle border-2 bg-white",
+            style: {
+              width: 100,
+              height: 100,
+            },
+          });
         }}
         className="pointer-events-auto rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-indigo-500"
       >
@@ -30,7 +49,16 @@ const CreatorPanel = ({
       </button>
       <button
         onClick={() => {
-          generateNewNode("square");
+          generateNewNode({
+            ...prefix,
+            type: "square",
+            className:
+              "rounded-10 border-yellow-600 p-3 flex justify-center align-middle border-2 bg-white",
+            style: {
+              width: 100,
+              height: 100,
+            },
+          });
         }}
         className="pointer-events-auto rounded-md bg-yellow-600 px-3 py-2 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-yellow-500"
       >
@@ -56,7 +84,16 @@ const CreatorPanel = ({
       </button>
       <button
         onClick={() => {
-          generateNewNode("diamond");
+          generateNewNode({
+            ...prefix,
+            type: "diamond",
+            className:
+              "rounded-10 p-[3px] flex justify-center align-middle  bg-red-600 clip-diamond",
+            style: {
+              width: 100,
+              height: 100,
+            },
+          });
         }}
         className="pointer-events-auto rounded-md bg-red-600 px-3 py-2 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-red-500"
       >
