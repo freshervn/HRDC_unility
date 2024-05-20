@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback } from "react";
-import ReactFlow, {  
+import ReactFlow, {
   MiniMap,
   Controls,
   Background,
@@ -54,20 +54,35 @@ export default function Flow() {
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow
           nodes={nodes}
+          defaultEdges={[
+            {
+              id: "edge1",
+              source: "node1",
+              target: "node2",
+              type: "smoothstep",
+            },
+          ]}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
-          onNodeClick={(_, node) => {
-            openPopup(node);
+          // onNodeClick={(_, node) => {
+          //   openPopup(node);
+          // }}
+          defaultEdgeOptions={{
+            type: "smoothstep",
           }}
         >
           <Panel position="top-right">
             <CreatorPanel generateNewNode={generateNewNode} />
           </Panel>
           <Panel position="top-left">
-            <FormatPanel clearNode={clearNode} onLayout={onLayout} nodes={nodes}/>
+            <FormatPanel
+              clearNode={clearNode}
+              onLayout={onLayout}
+              nodes={nodes}
+            />
           </Panel>
           <Controls />
           <MiniMap />

@@ -82,7 +82,7 @@ const CreatorPanel = ({
           />
         </svg>
       </button>
-      <button
+      {/* <button
         onClick={() => {
           generateNewNode({
             ...prefix,
@@ -112,7 +112,7 @@ const CreatorPanel = ({
             strokeLinejoin="round"
           />
         </svg>
-      </button>
+      </button> */}
     </div>
   );
 };

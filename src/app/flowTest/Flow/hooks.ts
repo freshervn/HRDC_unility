@@ -16,7 +16,7 @@ const useFlow = () => {
     setNodes((prev) => [
       ...prev,
       {
-        ...node        
+        ...node,
       },
     ]);
   };
