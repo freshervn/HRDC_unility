@@ -1,9 +1,44 @@
 import { useCallback } from "react";
-import { Node, addEdge, useEdgesState, useNodesState } from "reactflow";
+import {
+  Node,
+  addEdge,
+  getConnectedEdges,
+  getIncomers,
+  getOutgoers,
+  useEdgesState,
+  useNodesState,
+} from "reactflow";
 
 const useFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const onNodesDelete = useCallback(
+    (deleted: any) => {
+      setEdges(
+        deleted.reduce((acc: any, node: any) => {
+          const incomers = getIncomers(node, nodes, edges);
+          const outgoers = getOutgoers(node, nodes, edges);
+          const connectedEdges = getConnectedEdges([node], edges);
+
+          const remainingEdges = acc.filter(
+            (edge: any) => !connectedEdges.includes(edge)
+          );
+
+          const createdEdges = incomers.flatMap(({ id: source }) =>
+            outgoers.map(({ id: target }) => ({
+              id: `${source}->${target}`,
+              source,
+              target,
+            }))
+          );
+
+          return [...remainingEdges, ...createdEdges];
+        }, edges)
+      );
+    },
+    [nodes, edges, setEdges]
+  );
 
   const onConnect = useCallback(
     (params: any) => {
@@ -45,6 +80,7 @@ const useFlow = () => {
     generateNewNode,
     clearNode,
     updateNodeData,
+    onNodesDelete,
   };
 };
 export default useFlow;

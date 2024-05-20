@@ -29,6 +29,7 @@ export default function Flow() {
     generateNewNode,
     clearNode,
     updateNodeData,
+    onNodesDelete,
   } = useFlow();
 
   const onLayout = useCallback(
@@ -68,6 +69,7 @@ export default function Flow() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
+          onNodesDelete={onNodesDelete}
           // onNodeClick={(_, node) => {
           //   openPopup(node);
           // }}
