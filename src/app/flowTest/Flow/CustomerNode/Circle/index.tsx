@@ -1,17 +1,22 @@
 import { useState } from "react";
-import { Handle, NodeResizer, Position } from "reactflow";
+import { Handle, NodeResizer, Position, useStore } from "reactflow";
 import TargetHandle from "../TargetHandle";
 import SourceHandle from "../SourceHandle";
-
+const connectionNodeIdSelector = (state: any) => state.connectionNodeId;
 function CircleNode({
+  id,
   data,
   selected,
   ...rest
 }: {
+  id: string;
   data: any;
   selected: boolean;
 }) {
-  console.log(data, selected, rest);
+  const connectionNodeId = useStore(connectionNodeIdSelector);
+  const isConnecting = !!connectionNodeId;
+  const isTarget = connectionNodeId && connectionNodeId !== id;
+  // console.log(data, selected, rest);
   return (
     <>
       <NodeResizer
@@ -23,10 +28,17 @@ function CircleNode({
         } !w-[10px] !h-[10px] transform`}
       />
       <TargetHandle />
-      <input
-        type="text"
-        className="border-none outline-none w-fit h-fit  max-w-full m-auto text-center"
-      />
+      <div
+        className={`
+      w-full h-full rounded-full bg-white border-indigo-600 p-3 flex justify-center align-middle border-2
+      ${isTarget ? "border-dashed animate-spin" : "border-solid"} 
+      `}
+      >
+        <input
+          type="text"
+          className="border-none outline-none w-fit h-fit  max-w-full m-auto text-center"
+        />
+      </div>
       <SourceHandle selected={selected} />
       {/* <Handle
         type="source"

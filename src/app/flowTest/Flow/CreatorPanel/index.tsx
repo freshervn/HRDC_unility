@@ -21,8 +21,8 @@ const CreatorPanel = ({
           generateNewNode({
             ...prefix,
             type: "circle",
-            className:
-              "rounded-full border-indigo-600 p-3 flex justify-center align-middle border-2 bg-white",
+            // className: "rounded-full bg-white",
+            // border-indigo-600 p-3 flex justify-center align-middle border-2 bg-white",
             style: {
               width: 100,
               height: 100,
