@@ -16,6 +16,7 @@ import FormatPanel from "./FormatPanel";
 import getLayoutedElements from "./format_tree";
 import Popup, { usePopup } from "./NodeEditor";
 import useFlow from "./hooks";
+import edgeTypes from "./CustomEdges";
 
 export default function Flow() {
   const {
@@ -56,26 +57,20 @@ export default function Flow() {
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow
           nodes={nodes}
-          defaultEdges={[
-            {
-              id: "edge1",
-              source: "node1",
-              target: "node2",
-              type: "smoothstep",
-            },
-          ]}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
           onNodesDelete={onNodesDelete}
           // onNodeClick={(_, node) => {
           //   openPopup(node);
           // }}
           defaultEdgeOptions={{
             // style: { strokeWidth: 3, stroke: "black" },
-            type: "smoothstep",
+            type: "deletable",
+            // "smoothstep",
             markerEnd: {
               type: MarkerType.ArrowClosed,
               color: "black",

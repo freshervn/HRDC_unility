@@ -11,5 +11,7 @@
 ## Nối khối:
     1. Tạo đường nối
     2. Highlight các khối có thể nối
+    3. Xóa Edge
+    4. highlight Egde
 ## Viết text trong khối
 ## Sắp xếp dạng tree
