@@ -49,7 +49,7 @@ const EdgeDeletable = ({
           className="nodrag nopan"
         >
           <button
-            className={`${selected ? " opacity-1" : "opacity-0"}`}
+            className={`${selected ? " block" : "hidden"}`}
             onClick={onEdgeClick}
           >
             <svg
