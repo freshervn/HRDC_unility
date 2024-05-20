@@ -16,7 +16,6 @@ function CircleNode({
   const connectionNodeId = useStore(connectionNodeIdSelector);
   const isConnecting = !!connectionNodeId;
   const isTarget = connectionNodeId && connectionNodeId !== id;
-  // console.log(data, selected, rest);
   return (
     <>
       <NodeResizer
@@ -31,7 +30,7 @@ function CircleNode({
       <div
         className={`
       w-full h-full rounded-full bg-white border-indigo-600 p-3 flex justify-center align-middle border-2
-      ${isTarget ? "border-dashed animate-spin" : "border-solid"} 
+      ${isTarget ? "border-dashed" : "border-solid"} 
       `}
       >
         <input
