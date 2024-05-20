@@ -6,6 +6,7 @@ import ReactFlow, {
   Background,
   BackgroundVariant,
   Panel,
+  MarkerType,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
@@ -71,7 +72,12 @@ export default function Flow() {
           //   openPopup(node);
           // }}
           defaultEdgeOptions={{
+            // style: { strokeWidth: 3, stroke: "black" },
             type: "smoothstep",
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+              color: "black",
+            },
           }}
         >
           <Panel position="top-right">
