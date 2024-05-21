@@ -17,6 +17,7 @@ import getLayoutedElements from "./format_tree";
 import Popup, { usePopup } from "./NodeEditor";
 import useFlow from "./hooks";
 import edgeTypes from "./CustomEdges";
+import SearchPanel from "./SearchPanel";
 
 export default function Flow() {
   const {
@@ -54,7 +55,7 @@ export default function Flow() {
 
   return (
     <>
-      <div style={{ width: "100vw", height: "100vh" }}>
+      <div className="w-screen h-screen">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -79,6 +80,9 @@ export default function Flow() {
         >
           <Panel position="top-right">
             <CreatorPanel generateNewNode={generateNewNode} />
+          </Panel>
+          <Panel position="top-center">            
+            <SearchPanel/>            
           </Panel>
           <Panel position="top-left">
             <FormatPanel

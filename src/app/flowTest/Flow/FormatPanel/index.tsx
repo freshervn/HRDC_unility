@@ -16,6 +16,7 @@ const FormatPanel = ({
         Clear
       </button>
       <button
+        title="clear"
         onClick={onLayout}
         className="pointer-events-auto rounded-md bg-yellow-500 px-3 py-2 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-yellow-600"
       >
@@ -35,6 +36,7 @@ const FormatPanel = ({
         </svg>
       </button>
       <button
+      title="export"
         onClick={() => {
           alert(JSON.stringify(nodes));
         }}

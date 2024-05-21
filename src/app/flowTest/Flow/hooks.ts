@@ -6,12 +6,12 @@ import {
   getIncomers,
   getOutgoers,
   useEdgesState,
-  useNodesState,
+  useNodesState,  
 } from "reactflow";
 
 const useFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);  
 
   const onNodesDelete = useCallback(
     (deleted: any) => {
