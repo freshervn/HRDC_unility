@@ -9,7 +9,7 @@ const SearchPanel = () => {
   const handleTransform = useCallback(
     (node: Node) => {
       setCenter(node.position.x, node.position.y, {
-        duration: 1,
+        duration: 1000,
         zoom: 1,
       });
     },
