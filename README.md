@@ -15,3 +15,6 @@
     4. highlight Egde
 ## Viết text trong khối
 ## Sắp xếp dạng tree
+## Tìm kiếm
+    1. tìm kiếm node
+    2. di chuyển đến node
