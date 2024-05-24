@@ -11,7 +11,7 @@ const Autocomplete: React.FC<{
   const [suggestions, setSuggestions] = useState<string[]>(initSuggestions);
   useEffect(() => {
     const matches = initSuggestions.filter((node) => {
-      return String(node.data.fields[0])?.includes(inputValue);
+      return String(node.data?.fields?.[0])?.includes(inputValue);
     });
     setSuggestions(matches);
   }, [initSuggestions, inputValue]);
@@ -39,7 +39,7 @@ const Autocomplete: React.FC<{
             if (e.key === "Enter" && e?.target?.value) {
               search(
                 initSuggestions.find((node) => {
-                  return node.data.fields[0] === inputValue;
+                  return node.data?.fields?.[0] === inputValue;
                 })
               );
             }
@@ -57,15 +57,15 @@ const Autocomplete: React.FC<{
                 key={item.id}
                 className="px-4 py-2 cursor-pointer hover:bg-gray-100"
                 onClick={() => {
-                  setInputValue(item.data.fields[0]);
+                  setInputValue(item.data?.fields?.[0]);
                   search(
                     initSuggestions.find((node) => {
-                      return node.data.fields[0] === item.data.fields[0];
+                      return node.data?.fields?.[0] === item.data?.fields?.[0];
                     })
                   );
                 }}
               >
-                {item.data.fields[0] || item.id}
+                {item.data?.fields?.[0] || item.id}
               </li>
             ))}
           </ul>

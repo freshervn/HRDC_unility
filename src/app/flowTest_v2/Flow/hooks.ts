@@ -7,12 +7,30 @@ import {
   getOutgoers,
   useEdgesState,
   useNodesState,
-  getViewportForBounds,
+  useViewport,
 } from "reactflow";
+import { useStore } from "zustand";
+import { useShallow } from "zustand/react/shallow";
 
 const useFlow = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const selector = (state: any) => ({
+    nodes: state.nodes,
+    edges: state.edges,
+    onNodesChange: state.onNodesChange,
+    onEdgesChange: state.onEdgesChange,
+    onConnect: state.onConnect,
+    setNodes: state.setNodes,
+    setEdges: state.setEdges,
+  });
+  const {
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect,
+    setNodes,
+    setEdges,
+  }: any = useStore<any>(useShallow(selector));
   const getId = () => "" + Date.now() + Math.random();
 
   const onNodesDelete = useCallback(
@@ -42,16 +60,9 @@ const useFlow = () => {
     [nodes, edges, setEdges]
   );
 
-  const onConnect = useCallback(
-    (params: any) => {
-      setEdges((eds) => addEdge(params, eds));
-    },
-    [setEdges]
-  );
-
   const generateNewNode = useCallback(
     (node: Node) => {
-      setNodes((prev) => [
+      setNodes((prev: any) => [
         ...prev,
         {
           ...node,
@@ -79,18 +90,7 @@ const useFlow = () => {
   const onNodeDragStart = (_: any, node: Node) => {
     setSelectedNode(node);
   };
-  const { x, y, zoom } = getViewportForBounds(
-    {
-      x: 0,
-      y: 0,
-      width: 100,
-      height: 100,
-    },
-    1200,
-    800,
-    0.5,
-    2
-  );
+
   const GenNodeAtEndEdge = useCallback(
     (event: any) => {
       const targetIsPane = event.target.classList.contains("react-flow__pane");
@@ -106,6 +106,7 @@ const useFlow = () => {
           data: { label: `Node ${id}` },
         };
         generateNewNode(newNode);
+        // console.log(x, y);
         setEdges((eds: any) =>
           eds.concat({ id, source: selectedNode.id, target: id })
         );
