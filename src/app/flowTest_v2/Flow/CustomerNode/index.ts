@@ -1,4 +1,4 @@
-import CircleNode  from "./Circle";
+import CircleNode from "./Circle";
 import { DiamondNode } from "./Diamond";
 import { SquareNode } from "./Square";
 
