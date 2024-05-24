@@ -24,7 +24,7 @@ type RFState = {
 };
 
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
-const useStore = create<RFState>((set, get) => ({
+const useFlow = create<RFState>((set, get) => ({
   nodes: [],
   edges: [],
   onNodesChange: (changes: NodeChange[]) => {
@@ -50,4 +50,4 @@ const useStore = create<RFState>((set, get) => ({
   },
 }));
 
-export default useStore;
+export default useFlow;
