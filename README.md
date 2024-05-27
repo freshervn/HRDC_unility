@@ -13,6 +13,7 @@
     2. Highlight các khối có thể nối
     3. Xóa Edge
     4. highlight Egde
+    5. Tạo node khi kéo thả nối
 ## Viết text trong khối
 ## Sắp xếp dạng tree
 ## Tìm kiếm
