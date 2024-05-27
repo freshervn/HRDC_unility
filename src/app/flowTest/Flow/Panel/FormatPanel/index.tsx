@@ -1,6 +1,6 @@
-import getLayoutedElements from "@/app/flowTest/Flow/format_tree";
 import { useCallback } from "react";
 import { useReactFlow } from "reactflow";
+import getLayoutedElements from "./formatTree";
 
 const FormatPanel = () => {
   const { getNodes, getEdges, setNodes, setEdges } = useReactFlow();
