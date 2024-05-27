@@ -22,7 +22,7 @@ function CircleNode({
   const connectionNodeId = useStore(connectionNodeIdSelector);
   // const isConnecting = !!connectionNodeId;
   const isTarget = connectionNodeId && connectionNodeId !== id;
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#4f46e5");
   const { deleteElements, setNodes } = useReactFlow();
   return (
     <>

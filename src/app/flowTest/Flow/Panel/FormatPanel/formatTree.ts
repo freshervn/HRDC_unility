@@ -1,6 +1,6 @@
 import { stratify, tree } from "d3-hierarchy";
 const g = tree();
-const getLayoutedElements = (nodes: any, edges: any, options: any) => {
+const getLayoutedElements = (nodes: any, edges: any) => {
   if (nodes.length === 0) return { nodes, edges };
   // eslint-disable-next-line
   const node0 = document

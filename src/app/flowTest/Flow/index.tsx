@@ -1,113 +1,108 @@
-"use client";
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
+import { useShallow } from "zustand/react/shallow";
 import ReactFlow, {
-  MiniMap,
   Controls,
-  Background,
-  BackgroundVariant,
-  Panel,
+  Edge,
   MarkerType,
+  MiniMap,
+  Node,
+  OnConnectStartParams,
+  Panel,
+  ReactFlowProvider,
+  addEdge,
+  useEdgesState,
+  useNodesState,
+  useReactFlow,
 } from "reactflow";
-
 import "reactflow/dist/style.css";
-import nodeTypes from "./CustomerNode";
-import CreatorPanel from "./CreatorPanel";
-import FormatPanel from "./FormatPanel";
-import getLayoutedElements from "./format_tree";
-import Popup, { usePopup } from "./NodeEditor";
-import useFlow from "./hooks";
+import useFlow from "@/hook/flow";
+import CreatorPanel from "./Panel/CreatorPanel";
+import SearchPanel from "./Panel/SearchPanel";
+import FormatPanel from "./Panel/FormatPanel";
 import edgeTypes from "./CustomEdges";
-import SearchPanel from "./SearchPanel";
+import nodeTypes from "./CustomerNode";
+import genId from "@/utility/genId";
 
-export default function Flow() {
-  const {
-    nodes,
-    setNodes,
-    onNodesChange,
-    edges,
-    setEdges,
-    onEdgesChange,
-    onConnect,
-    generateNewNode,
-    clearNode,
-    updateNodeData,
-    onNodesDelete,
-    GenNodeAtEndEdge,
-    onNodeDragStart,
-  } = useFlow();
-
-  const onLayout = useCallback(
-    (direction: string) => {
-      const { nodes: layoutedNodes, edges: layoutedEdges } =
-        getLayoutedElements(nodes, edges, {
-          direction,
-        });
-
-      setNodes([...layoutedNodes]);
-      setEdges([...layoutedEdges]);
+function Flow() {
+  const { getNode, screenToFlowPosition } = useReactFlow();
+  const connectingNodeId = useRef<any>(null);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const onConnect = useCallback(
+    (params: any) => {
+      // reset the start node on connections
+      connectingNodeId.current = null;
+      setEdges((eds) => addEdge(params, eds));
     },
-    [nodes, edges, setEdges, setNodes]
+    [setEdges]
   );
-  const {
-    popupData = { id: 0 },
-    isOpen = false,
-    openPopup,
-    closePopup,
-  } = usePopup();
+  const onConnectStart = useCallback((event: any, params: any) => {
+    connectingNodeId.current = params.nodeId;
+  }, []);
+
+  const onConnectEnd = useCallback(
+    (event: any) => {
+      if (!connectingNodeId.current) return;
+      const targetIsPane = event.target.classList.contains("react-flow__pane");
+      const nodedata = getNode(connectingNodeId.current);
+      if (targetIsPane) {
+        // we need to remove the wrapper bounds, in order to get the correct position
+        const id = genId();
+        const newNode = {
+          ...nodedata,
+          id,
+          position: screenToFlowPosition({
+            x: event.clientX,
+            y: event.clientY,
+          }),
+          data: { label: `Node ${id}` },
+          origin: [0.5, 0.0],
+        };
+
+        setNodes((nds) => nds.concat(newNode));
+        setEdges((eds) =>
+          eds.concat({ id, source: connectingNodeId.current, target: id })
+        );
+      }
+    },
+    [setNodes, setEdges, screenToFlowPosition, getNode]
+  );
 
   return (
-    <>
-      <div className="w-screen h-screen">
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          nodeTypes={nodeTypes}
-          edgeTypes={edgeTypes}
-          onNodesDelete={onNodesDelete}
-          onConnectEnd={GenNodeAtEndEdge}
-          onNodeDragStart={onNodeDragStart}
-          // onNodeClick={(_, node) => {
-          //   openPopup(node);
-          // }}
-          defaultEdgeOptions={{
-            // style: { strokeWidth: 3, stroke: "black" },
-            type: "deletable",
-            // "smoothstep",
-            markerEnd: {
-              type: MarkerType.ArrowClosed,
-              color: "black",
-            },
-          }}
-        >
-          <Panel position="top-right">
-            <CreatorPanel generateNewNode={generateNewNode} />
-          </Panel>
-          <Panel position="top-center">
-            <SearchPanel />
-          </Panel>
-          <Panel position="top-left">
-            <FormatPanel
-              clearNode={clearNode}
-              onLayout={onLayout}
-              nodes={nodes}
-              edges={edges}
-            />
-          </Panel>
-          <Controls />
-          <MiniMap />
-          <Background variant={BackgroundVariant.Cross} gap={12} size={1} />
-        </ReactFlow>
-      </div>
-      <Popup
-        key={popupData.id}
-        isOpen={isOpen}
-        closePopup={closePopup}
-        data={popupData}
-        onSave={updateNodeData}
-      />
-    </>
+    <div className="w-screen h-screen">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnectStart={onConnectStart}
+        onConnect={onConnect}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        onConnectEnd={onConnectEnd}
+        fitView
+        defaultEdgeOptions={{
+          type: "deletable",
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+            color: "black",
+          },
+        }}
+      >
+        <Panel position="top-right">
+          <CreatorPanel />
+        </Panel>
+        <Panel position="top-center">
+          <SearchPanel />
+        </Panel>
+        <Panel position="top-left">
+          <FormatPanel />
+        </Panel>
+        <Controls />
+        <MiniMap />
+      </ReactFlow>
+    </div>
   );
 }
+
+export default Flow;

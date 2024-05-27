@@ -57,7 +57,7 @@ const Autocomplete: React.FC<{
                 key={item.id}
                 className="px-4 py-2 cursor-pointer hover:bg-gray-100"
                 onClick={() => {
-                  setInputValue(item.data?.fields?.[0]);
+                  setInputValue(item.data?.fields?.[0] || "");
                   search(
                     initSuggestions.find((node) => {
                       return node.data?.fields?.[0] === item.data?.fields?.[0];

@@ -1,14 +1,22 @@
-const FormatPanel = ({
-  clearNode,
-  onLayout,
-  nodes,
-  edges,
-}: {
-  clearNode: () => void;
-  onLayout: any;
-  nodes: any;
-  edges: any;
-}) => {
+import { useCallback } from "react";
+import { useReactFlow } from "reactflow";
+import getLayoutedElements from "./formatTree";
+
+const FormatPanel = () => {
+  const { getNodes, getEdges, setNodes, setEdges } = useReactFlow();
+  const clearNode = () => {
+    setNodes([]);
+    setEdges([]);
+  };
+
+  const onLayout = useCallback(() => {
+    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+      getNodes(),
+      getEdges()
+    );
+    setNodes([...layoutedNodes]);
+    setEdges([...layoutedEdges]);
+  }, [getNodes, getEdges, setEdges, setNodes]);
   return (
     <div className="flex gap-4 justify-center align-middle bg-white p-3 rounded-md">
       <button
@@ -40,8 +48,8 @@ const FormatPanel = ({
       <button
         title="export"
         onClick={() => {
-          console.log(nodes);
-          console.log(edges);
+          console.log(getNodes());
+          console.log(getEdges());
         }}
         className="pointer-events-auto rounded-md bg-green-500 px-3 py-2 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-green-600"
       >

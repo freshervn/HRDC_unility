@@ -1,10 +1,7 @@
-import { Node } from "reactflow";
+import { Node, useReactFlow } from "reactflow";
 
-const CreatorPanel = ({
-  generateNewNode,
-}: {
-  generateNewNode: (node: Node) => void;
-}) => {
+const CreatorPanel = () => {
+  const { addNodes } = useReactFlow();
   const prefix: Node = {
     id: "" + Date.now() + Math.random(),
     position: {
@@ -18,11 +15,9 @@ const CreatorPanel = ({
       <p className="text-2xl m-auto">New</p>
       <button
         onClick={() => {
-          generateNewNode({
+          addNodes({
             ...prefix,
             type: "circle",
-            // className: "rounded-full bg-white",
-            // border-indigo-600 p-3 flex justify-center align-middle border-2 bg-white",
             style: {
               width: 100,
               height: 100,
@@ -49,7 +44,7 @@ const CreatorPanel = ({
       </button>
       <button
         onClick={() => {
-          generateNewNode({
+          addNodes({
             ...prefix,
             type: "square",
             className:
