@@ -26,7 +26,6 @@ const FormatPanel = () => {
         Clear
       </button>
       <button
-        title="clear"
         onClick={onLayout}
         className="pointer-events-auto rounded-md bg-yellow-500 px-3 py-2 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-yellow-600"
       >
@@ -46,38 +45,13 @@ const FormatPanel = () => {
         </svg>
       </button>
       <button
-        title="export"
         onClick={() => {
-          console.log(getNodes());
-          console.log(getEdges());
+          localStorage.setItem("myNodes", JSON.stringify(getNodes()));
+          localStorage.setItem("myEdges", JSON.stringify(getEdges()));
         }}
-        className="pointer-events-auto rounded-md bg-green-500 px-3 py-2 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-green-600"
+        className="pointer-events-auto rounded-md bg-cyan-500 px-3 py-2 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-cyan-500"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          width="32px"
-          height="32px"
-          viewBox="0 0 512 512"
-          version="1.1"
-        >
-          <title>export</title>
-          <g
-            id="Page-1"
-            stroke="none"
-            strokeWidth="1"
-            fill="none"
-            fillRule="evenodd"
-          >
-            <g
-              id="Combined-Shape"
-              fill="white"
-              transform="translate(64.000000, 48.915055)"
-            >
-              <path d="M170.666667,36.418278 L170.666667,79.0849447 L42.6666667,79.0849447 L42.6666667,356.418278 L341.333333,356.418278 L341.333333,228.418278 L384,228.418278 L384,399.084945 L0,399.084945 L0,36.418278 L170.666667,36.418278 Z M313.751611,0 L414.169889,100.418278 L313.751611,200.836556 L283.581722,170.666667 L332.485,121.751 L277.333333,121.751611 C243.249474,121.751611 215.388568,148.395237 213.441977,181.991125 L213.333333,185.751611 L213.333333,292.418278 L170.666667,292.418278 L170.666667,185.751611 C170.666667,128.391511 215.942543,81.6061582 272.706355,79.1834943 L277.333333,79.0849447 L332.484,79.084 L283.581722,30.1698893 L313.751611,0 Z"></path>
-            </g>
-          </g>
-        </svg>
+        Save
       </button>
     </div>
   );

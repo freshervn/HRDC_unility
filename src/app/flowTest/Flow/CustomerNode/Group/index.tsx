@@ -21,8 +21,9 @@ function CircleNode({
   selected: boolean;
 }) {
   const connectionNodeId = useStore(connectionNodeIdSelector);
+  // const isConnecting = !!connectionNodeId;
   const isTarget = connectionNodeId && connectionNodeId !== id;
-  const [color, setColor] = useState("#4f46e5");
+  const [color, setColor] = useState("#CA8A04");
   const { deleteElements, setNodes } = useReactFlow();
   return (
     <>
@@ -52,34 +53,16 @@ function CircleNode({
       <TargetHandle />
       <div
         className={`
-      w-full h-full rounded-full bg-white
-      border-indigo-600
-        p-3 flex justify-center align-middle border-2
+      w-full h-full rounded-md bg-transparent
+      p-3
+      border-yellow-600
+         flex justify-center align-middle border-2
       ${isTarget ? "border-dashed" : "border-solid"} 
       `}
         style={{
           ...(color && { borderColor: color }),
         }}
-      >
-        <input
-          type="text"
-          className="border-none outline-none w-fit h-fit  max-w-full m-auto text-center"
-          value={data?.fields?.[0] || ""}
-          onChange={(e) => {
-            setNodes((prev) => {
-              prev.map((node: any) => {
-                if (node.id === id) {
-                  node.data = {
-                    ...node.data,
-                    fields: [e.target.value],
-                  };
-                }
-              });
-              return prev;
-            });
-          }}
-        />
-      </div>
+      ></div>
       <SourceHandle selected={selected} />
     </>
   );

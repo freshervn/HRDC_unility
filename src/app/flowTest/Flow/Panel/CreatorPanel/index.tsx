@@ -46,9 +46,7 @@ const CreatorPanel = () => {
         onClick={() => {
           addNodes({
             ...prefix,
-            type: "square",
-            className:
-              "rounded-10 border-yellow-600 p-3 flex justify-center align-middle border-2 bg-white",
+            type: "custom_group",
             style: {
               width: 100,
               height: 100,

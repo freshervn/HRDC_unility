@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import ReactFlow, {
   Controls,
@@ -28,6 +28,10 @@ function Flow() {
   const connectingNodeId = useRef<any>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  useEffect(() => {
+    setNodes(JSON.parse(localStorage.getItem("myNodes") || ""));
+    setEdges(JSON.parse(localStorage.getItem("myEdges") || ""));
+  }, []);
   const onConnect = useCallback(
     (params: any) => {
       // reset the start node on connections
