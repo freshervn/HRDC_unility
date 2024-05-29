@@ -2,7 +2,7 @@ import { memo, useState } from "react";
 import {
   NodeResizer,
   NodeToolbar,
-  useNodes,
+  useOnSelectionChange,
   useReactFlow,
   useStore,
 } from "reactflow";
@@ -21,10 +21,16 @@ function CircleNode({
   selected: boolean;
 }) {
   const connectionNodeId = useStore(connectionNodeIdSelector);
-  // const isConnecting = !!connectionNodeId;
+  console.log(rest)
   const isTarget = connectionNodeId && connectionNodeId !== id;
+  const { getNodes } = useReactFlow();
+  const nodes = getNodes();
+  const nodeDraging = nodes.find((node) => node.dragging);
+  const isParent = nodeDraging?.parentId === id;
+  console.log(nodeDraging)
   const [color, setColor] = useState("#CA8A04");
-  const { deleteElements, setNodes } = useReactFlow();
+  const { deleteElements } = useReactFlow();
+  const padding = 10;
   return (
     <>
       <NodeToolbar
@@ -53,14 +59,14 @@ function CircleNode({
       <TargetHandle />
       <div
         className={`
-      w-full h-full rounded-md bg-transparent
-      p-3
+      w-full h-full rounded-md bg-transparent      
       border-yellow-600
          flex justify-center align-middle border-2
-      ${isTarget ? "border-dashed" : "border-solid"} 
+      ${isTarget || isParent ? "border-dashed" : "border-solid"} 
       `}
         style={{
           ...(color && { borderColor: color }),
+          padding: padding,
         }}
       ></div>
       <SourceHandle selected={selected} />
