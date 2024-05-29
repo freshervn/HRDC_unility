@@ -23,10 +23,10 @@ function Flow() {
     useReactFlow();
   const connectingNodeId = useRef<any>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(
-    JSON.parse(localStorage.getItem("myNodes") || "") || []
+    JSON.parse(localStorage.getItem("myNodes") ?? "[]") || []
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState(
-    JSON.parse(localStorage.getItem("myEdges") || "") || []
+    JSON.parse(localStorage.getItem("myEdges") ?? "[]") || []
   );
 
   // Connect node
