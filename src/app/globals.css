@@ -15,6 +15,10 @@
 body {
   background-color: whitesmoke;
 }
+.react-flow__node.highlight {
+  background-color: #ff0072;
+  color: white;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
